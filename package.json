@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/luisgustavomiki/smart-command/issues"
   },
-  "homepage": "https://github.com/luisgustavomiki/smart-command#readme"
+  "homepage": "https://github.com/luisgustavomiki/smart-command#readme",
+  "devDependencies": {
+    "typescript": "^2.9.1"
+  }
 }
