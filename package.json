@@ -2,7 +2,8 @@
   "name": "smart-command",
   "version": "1.0.0",
   "description": "Handles command annotation and parameter processing.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types" : "dist/index.d.ts",
   "scripts": {
     "test": "npm run test"
   },
