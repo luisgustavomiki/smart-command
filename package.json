@@ -1,0 +1,19 @@
+{
+  "name": "smart-command",
+  "version": "1.0.0",
+  "description": "Handles command annotation and parameter processing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luisgustavomiki/smart-command.git"
+  },
+  "author": "Luis Gustavo Miki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luisgustavomiki/smart-command/issues"
+  },
+  "homepage": "https://github.com/luisgustavomiki/smart-command#readme"
+}
