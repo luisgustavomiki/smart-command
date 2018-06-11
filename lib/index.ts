@@ -40,7 +40,7 @@ export class Scope {
     try {
       command.run(source, words.slice(1).join(' '));
     } catch(error) {
-
+      
     }
   }
 }
