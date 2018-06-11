@@ -9,16 +9,15 @@ class Command {
     }
     run(source, text) {
         text = text.trim();
-        var parsedParameters = [];
-        var lastMatch = 0;
+        var parsedParameters = {};
         this.parameterList.parameters.every(p => {
             var parser = p.parser;
-            var result = text.slice(lastMatch).match(parser.capturePattern);
+            var result = text.match(parser.capturePattern);
             if (result) {
                 var index = result.index || 0;
                 if (index == 0) {
-                    lastMatch = result[0].length;
-                    parsedParameters.push({ name: p.name, value: p.parse(result[0]) });
+                    text = text.slice(result[0].length).trim();
+                    parsedParameters[p.name] = p.parse(result[0]);
                     return true;
                 }
                 else {
