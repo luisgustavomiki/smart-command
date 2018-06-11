@@ -39,7 +39,9 @@ describe('TypeParser Number', () => {
       expect(call).to.throw(InvalidParameterError);
     }
   });
+});
 
+describe('TypeParser Word', () => {
   it('should parse Word correctly', () => {
     var tp = TypeParser.getByName('Word');
     if(tp) {
@@ -57,7 +59,9 @@ describe('TypeParser Number', () => {
       expect(call).to.throw(BlankParameterError);
     }
   });
+});
 
+describe('TypeParser Phrase', () => {
   it('should parse Phrase correctly', () => {
     var tp = TypeParser.getByName('Phrase');
     if(tp) {
