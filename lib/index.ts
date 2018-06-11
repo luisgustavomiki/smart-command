@@ -2,19 +2,6 @@ import { ParameterList } from "./parameter_list";
 import { Command } from "./command";
 import { EventEmitter } from "events";
 
-
-/*
-
-var playerCommands = new Scope('player');
-playerCommands.addCommnand('ban', {
-  target: 'Player',
-  time: 'Integer',
-  reason: { type: 'Phrase', required: false }
-}. function(source: any, target: MpPlayer, time, reason) {
-  var source_player = source as 
-});
-*/
-
 var scope_list: Scope[] = [];
 
 export class Scope extends EventEmitter {
