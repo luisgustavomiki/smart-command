@@ -54,9 +54,9 @@ TypeParser.create('Number', /[0-9]+/, (bit: string) => {
 
   var i = parseFloat(bit);
   if(!isNaN(i) && isFinite(bit as any)) {
-    throw new InvalidParameterError("Not a number.");
+    return i;
   }
-  return i;
+  throw new InvalidParameterError("Not a number.");
 });
 
 TypeParser.create('Word', /[^\s\\]+/, (bit: string) => {
@@ -70,7 +70,7 @@ TypeParser.create('Word', /[^\s\\]+/, (bit: string) => {
 TypeParser.create('Phrase', /"(?:[^"\\]|\\.)*"/, (bit: string) => {
   bit = bit.trim();
   bit = bit.replace(/^"(.*)"$/, '$1');
-  bit = bit.replace(/\\"/g, '');
+  bit = bit.replace(/\\"/g, '"');
   if(bit.length == 0) {
     throw new BlankParameterError('There is no word to parse.');
   }
