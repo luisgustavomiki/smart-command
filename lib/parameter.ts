@@ -5,7 +5,7 @@ export class Parameter {
   public readonly parser: TypeParser;
   public readonly required: boolean = true;
 
-  constructor(name: string, configuration: any) {
+  constructor(public readonly name: string, configuration: any) {
     if(_.isString(configuration)) {
       var pp = TypeParser.getByName(configuration);
       if(!pp) {
@@ -23,5 +23,9 @@ export class Parameter {
         this.required = configuration.required;
       }
     }
+  }
+
+  parse(bit: string) {
+    return this.parser.parse(bit);
   }
 }

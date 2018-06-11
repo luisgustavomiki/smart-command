@@ -46,7 +46,7 @@ export class TypeParser {
   }
 }
 
-TypeParser.create('Number', /([0-9]+)/, (bit: string) => { 
+TypeParser.create('Number', /[0-9]+/, (bit: string) => { 
   var bit = bit.trim();
   if(bit.length == 0) {
     throw new BlankParameterError('There is no number to parse.');
@@ -59,7 +59,7 @@ TypeParser.create('Number', /([0-9]+)/, (bit: string) => {
   return i;
 });
 
-TypeParser.create('Word', /([^\s\\]+)/, (bit: string) => {
+TypeParser.create('Word', /[^\s\\]+/, (bit: string) => {
   bit = bit.trim();
   if(bit.length == 0) {
     throw new BlankParameterError('There is no word to parse.');
@@ -70,6 +70,7 @@ TypeParser.create('Word', /([^\s\\]+)/, (bit: string) => {
 TypeParser.create('Phrase', /"(?:[^"\\]|\\.)*"/, (bit: string) => {
   bit = bit.trim();
   bit = bit.replace(/^"(.*)"$/, '$1');
+  bit = bit.replace(/\\"/g, '');
   if(bit.length == 0) {
     throw new BlankParameterError('There is no word to parse.');
   }

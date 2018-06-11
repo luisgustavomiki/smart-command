@@ -38,7 +38,7 @@ export class Scope {
     }
 
     try {
-      command.parse(source, words.slice(1).join(' '));
+      command.run(source, words.slice(1).join(' '));
     } catch(error) {
 
     }

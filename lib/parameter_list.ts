@@ -3,7 +3,7 @@ import { Parameter } from "./parameter";
 export class ParameterList {
   private _parameters: Parameter[] = [];
 
-  constructor(public readonly fields: any) {
+  constructor(fields: any) {
     var keys = Object.keys(fields);
     var anyNonRequired = false;
     keys.forEach(k => {
