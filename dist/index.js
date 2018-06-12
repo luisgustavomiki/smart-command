@@ -3,17 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const parameter_list_1 = require("./parameter_list");
 const command_1 = require("./command");
 const events_1 = require("events");
-/*
-
-var playerCommands = new Scope('player');
-playerCommands.addCommnand('ban', {
-  target: 'Player',
-  time: 'Integer',
-  reason: { type: 'Phrase', required: false }
-}. function(source: any, target: MpPlayer, time, reason) {
-  var source_player = source as
-});
-*/
 var scope_list = [];
 class Scope extends events_1.EventEmitter {
     /**

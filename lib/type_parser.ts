@@ -1,5 +1,4 @@
-import { BlankParameterError } from "./errors/blank_parameter_error";
-import { InvalidParameterError } from "./errors/invalid_parameter_error";
+import { TypeParsingError } from "./errors/type_parsing_error";
 
 var parsers_list: TypeParser[] = [];
 
@@ -49,20 +48,20 @@ export class TypeParser {
 TypeParser.create('Number', /[0-9]+/, (bit: string) => { 
   var bit = bit.trim();
   if(bit.length == 0) {
-    throw new BlankParameterError('There is no number to parse.');
+    throw new TypeParsingError('There is no number to parse.');
   }
 
   var i = parseFloat(bit);
   if(!isNaN(i) && isFinite(bit as any)) {
     return i;
   }
-  throw new InvalidParameterError("Not a number.");
+  throw new TypeParsingError("Not a number.");
 });
 
 TypeParser.create('Word', /[^\s\\]+/, (bit: string) => {
   bit = bit.trim();
   if(bit.length == 0) {
-    throw new BlankParameterError('There is no word to parse.');
+    throw new TypeParsingError('There is no word to parse.');
   }
   return bit;
 });
@@ -72,7 +71,7 @@ TypeParser.create('Phrase', /"(?:[^"\\]|\\.)*"/, (bit: string) => {
   bit = bit.replace(/^"(.*)"$/, '$1');
   bit = bit.replace(/\\"/g, '"');
   if(bit.length == 0) {
-    throw new BlankParameterError('There is no phrase to parse.');
+    throw new TypeParsingError('There is no phrase to parse.');
   }
   return bit;
 });
@@ -80,7 +79,7 @@ TypeParser.create('Phrase', /"(?:[^"\\]|\\.)*"/, (bit: string) => {
 TypeParser.create('String', /[^\n]+/, (bit: string) => {
   bit = bit.trim();
   if(bit.length == 0) {
-    throw new BlankParameterError('There is no string to parse.');
+    throw new TypeParsingError('There is no string to parse.');
   }
   return bit;
 });
@@ -92,7 +91,7 @@ if (typeof mp !== 'undefined') {
     TypeParser.create('Player', /([^\s\\]+)/, (bit: string) => {
       bit = bit.trim();
       if(bit.length == 0) {
-        throw new BlankParameterError('There is no word to parse.');
+        throw new TypeParsingError('There is no word to parse.');
       }
 
       if(!isNaN(parseFloat(bit)) && isFinite(bit as any) && Number.isInteger(bit as any)) {

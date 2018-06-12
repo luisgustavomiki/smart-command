@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import 'mocha';
 
 import { TypeParser } from '../lib/type_parser';
-import { BlankParameterError } from '../lib/errors/blank_parameter';
-import { InvalidParameterError } from '../lib/errors/invalid_parameter';
+import { BlankParameterError } from '../lib/errors/blank_parameter_error';
+import { InvalidParameterError } from '../lib/errors/invalid_parameter_error';
 
 describe('TypeParser Number', () => {
   it('should return all default TypeParsers', () => {

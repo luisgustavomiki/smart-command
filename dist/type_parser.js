@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const blank_parameter_1 = require("./errors/blank_parameter");
-const invalid_parameter_1 = require("./errors/invalid_parameter");
+const type_parsing_error_1 = require("./errors/type_parsing_error");
 var parsers_list = [];
 class TypeParser {
     constructor(name, capturePattern, parser) {
@@ -46,18 +45,18 @@ exports.TypeParser = TypeParser;
 TypeParser.create('Number', /[0-9]+/, (bit) => {
     var bit = bit.trim();
     if (bit.length == 0) {
-        throw new blank_parameter_1.BlankParameterError('There is no number to parse.');
+        throw new type_parsing_error_1.TypeParsingError('There is no number to parse.');
     }
     var i = parseFloat(bit);
     if (!isNaN(i) && isFinite(bit)) {
         return i;
     }
-    throw new invalid_parameter_1.InvalidParameterError("Not a number.");
+    throw new type_parsing_error_1.TypeParsingError("Not a number.");
 });
 TypeParser.create('Word', /[^\s\\]+/, (bit) => {
     bit = bit.trim();
     if (bit.length == 0) {
-        throw new blank_parameter_1.BlankParameterError('There is no word to parse.');
+        throw new type_parsing_error_1.TypeParsingError('There is no word to parse.');
     }
     return bit;
 });
@@ -66,7 +65,14 @@ TypeParser.create('Phrase', /"(?:[^"\\]|\\.)*"/, (bit) => {
     bit = bit.replace(/^"(.*)"$/, '$1');
     bit = bit.replace(/\\"/g, '"');
     if (bit.length == 0) {
-        throw new blank_parameter_1.BlankParameterError('There is no word to parse.');
+        throw new type_parsing_error_1.TypeParsingError('There is no phrase to parse.');
+    }
+    return bit;
+});
+TypeParser.create('String', /[^\n]+/, (bit) => {
+    bit = bit.trim();
+    if (bit.length == 0) {
+        throw new type_parsing_error_1.TypeParsingError('There is no string to parse.');
     }
     return bit;
 });
@@ -77,7 +83,7 @@ if (typeof mp !== 'undefined') {
         TypeParser.create('Player', /([^\s\\]+)/, (bit) => {
             bit = bit.trim();
             if (bit.length == 0) {
-                throw new blank_parameter_1.BlankParameterError('There is no word to parse.');
+                throw new type_parsing_error_1.TypeParsingError('There is no word to parse.');
             }
             if (!isNaN(parseFloat(bit)) && isFinite(bit) && Number.isInteger(bit)) {
                 // @ts-ignore
