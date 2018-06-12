@@ -1,6 +1,8 @@
 import { ParameterList } from "./parameter_list";
 import { Command } from "./command";
 import { EventEmitter } from "events";
+import { BlankParameterError } from "./errors/blank_parameter_error";
+import { InvalidParameterError } from "./errors/invalid_parameter_error";
 
 var scope_list: Scope[] = [];
 
@@ -43,7 +45,12 @@ export class Scope extends EventEmitter {
     try {
       command.run(source, words.slice(1).join(' '));
     } catch(error) {
-      this.emit('commandError', error, command.name, words.slice(1).join(' '));
+      if(error instanceof BlankParameterError ||
+        error instanceof InvalidParameterError) {
+        this.emit('parameterError', error, command.name, words.slice(1).join(' '));
+      } else {
+        throw error;
+      }
     }
   }
 }

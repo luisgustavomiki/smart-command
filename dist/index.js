@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const parameter_list_1 = require("./parameter_list");
 const command_1 = require("./command");
 const events_1 = require("events");
+const blank_parameter_error_1 = require("./errors/blank_parameter_error");
+const invalid_parameter_error_1 = require("./errors/invalid_parameter_error");
 var scope_list = [];
 class Scope extends events_1.EventEmitter {
     /**
@@ -41,7 +43,13 @@ class Scope extends events_1.EventEmitter {
             command.run(source, words.slice(1).join(' '));
         }
         catch (error) {
-            this.emit('commandError', error, command.name, words.slice(1).join(' '));
+            if (error instanceof blank_parameter_error_1.BlankParameterError ||
+                error instanceof invalid_parameter_error_1.InvalidParameterError) {
+                this.emit('parameterError', error, command.name, words.slice(1).join(' '));
+            }
+            else {
+                throw error;
+            }
         }
     }
 }
