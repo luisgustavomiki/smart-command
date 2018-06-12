@@ -50,7 +50,12 @@ class Command {
                 // if there is no match for this parameter
                 // and it is required, throw an error
                 if (p.required) {
-                    throw new blank_parameter_error_1.BlankParameterError("No match for required parameter.", p.name);
+                    if (text.length) {
+                        throw new invalid_parameter_error_1.InvalidParameterError("No match for required parameter.", p.name);
+                    }
+                    else {
+                        throw new blank_parameter_error_1.BlankParameterError("No match for required parameter.", p.name);
+                    }
                 }
                 // if it is not required, break the parameter
                 // parsing. it is a requirement for nonrequired
