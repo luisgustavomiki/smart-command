@@ -51,7 +51,7 @@ describe('Command', () => {
     scope.addCommand('test', {number: 'Number'},  (source, parameters) => {
       expect.fail();
     });
-    scope.on('parameterError', (error: BlankParameterError, command, raw) => {
+    scope.on('parameterError', (source, error: BlankParameterError, command: Command, raw: string) => {
       expect(error).to.be.a.instanceof(BlankParameterError);
       expect(error.parameter).to.eq('number');
       expect(command).to.eq('test');
@@ -64,7 +64,7 @@ describe('Command', () => {
     scope.addCommand('test', {number: 'Number'},  (source, parameters) => {
       expect.fail();
     });
-    scope.on('parameterError', (error: InvalidParameterError, command, raw) => {
+    scope.on('parameterError', (source, error: InvalidParameterError, command: Command, raw: string) => {
       expect(error).to.be.a.instanceof(InvalidParameterError);
       expect(error.parameter).to.eq('number');
       expect(command).to.eq('test');

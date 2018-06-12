@@ -38,7 +38,7 @@ export class Scope extends EventEmitter {
     var command = this.commands.find(c => c.name == words[0]);
 
     if(!command) {
-      this.emit('commandNotFound', input);
+      this.emit('commandNotFound', source, input);
       return;
     }
 
@@ -47,7 +47,7 @@ export class Scope extends EventEmitter {
     } catch(error) {
       if(error instanceof BlankParameterError ||
         error instanceof InvalidParameterError) {
-        this.emit('parameterError', error, command.name, words.slice(1).join(' '));
+        this.emit('parameterError', source, error, command, words.slice(1).join(' '));
       } else {
         throw error;
       }

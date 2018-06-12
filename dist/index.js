@@ -36,7 +36,7 @@ class Scope extends events_1.EventEmitter {
         var words = input.split(' ');
         var command = this.commands.find(c => c.name == words[0]);
         if (!command) {
-            this.emit('commandNotFound', input);
+            this.emit('commandNotFound', source, input);
             return;
         }
         try {
@@ -45,7 +45,7 @@ class Scope extends events_1.EventEmitter {
         catch (error) {
             if (error instanceof blank_parameter_error_1.BlankParameterError ||
                 error instanceof invalid_parameter_error_1.InvalidParameterError) {
-                this.emit('parameterError', error, command.name, words.slice(1).join(' '));
+                this.emit('parameterError', source, error, command, words.slice(1).join(' '));
             }
             else {
                 throw error;

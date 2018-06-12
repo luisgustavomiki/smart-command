@@ -4,7 +4,7 @@ import { BlankParameterError } from "./errors/blank_parameter_error";
 import { TypeParsingError } from "./errors/type_parsing_error";
 
 export class Command {
-  constructor(public readonly name: string, private parameterList: ParameterList, private callback: (source: any, parameters: any) => void) {}
+  constructor(public readonly name: string, public readonly parameterList: ParameterList, private callback: (source: any, parameters: any) => void) {}
   
   run(source: any, text: string) {
     text = text.trim();
