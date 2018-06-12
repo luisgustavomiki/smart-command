@@ -3,6 +3,7 @@ import { Command } from "./command";
 import { EventEmitter } from "events";
 import { BlankParameterError } from "./errors/blank_parameter_error";
 import { InvalidParameterError } from "./errors/invalid_parameter_error";
+import { ParameterError } from "./errors/parameter_error";
 
 var scope_list: Scope[] = [];
 
@@ -54,3 +55,13 @@ export class Scope extends EventEmitter {
     }
   }
 }
+
+export { ParameterError } from "./errors/parameter_error";
+export { BlankParameterError } from "./errors/blank_parameter_error";
+export { InvalidParameterError } from "./errors/invalid_parameter_error";
+
+export { Command } from "./command";
+export { ParameterList } from "./parameter_list";
+export { Parameter } from "./parameter";
+
+export { TypeParser } from "./type_parser";

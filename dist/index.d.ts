@@ -12,3 +12,10 @@ export declare class Scope extends EventEmitter {
     addCommand(name: string, parameters: any, handler: (source: any, ...args: any[]) => void): void;
     parse(source: any, input: string): void;
 }
+export { ParameterError } from "./errors/parameter_error";
+export { BlankParameterError } from "./errors/blank_parameter_error";
+export { InvalidParameterError } from "./errors/invalid_parameter_error";
+export { Command } from "./command";
+export { ParameterList } from "./parameter_list";
+export { Parameter } from "./parameter";
+export { TypeParser } from "./type_parser";

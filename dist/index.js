@@ -54,3 +54,17 @@ class Scope extends events_1.EventEmitter {
     }
 }
 exports.Scope = Scope;
+var parameter_error_1 = require("./errors/parameter_error");
+exports.ParameterError = parameter_error_1.ParameterError;
+var blank_parameter_error_2 = require("./errors/blank_parameter_error");
+exports.BlankParameterError = blank_parameter_error_2.BlankParameterError;
+var invalid_parameter_error_2 = require("./errors/invalid_parameter_error");
+exports.InvalidParameterError = invalid_parameter_error_2.InvalidParameterError;
+var command_2 = require("./command");
+exports.Command = command_2.Command;
+var parameter_list_2 = require("./parameter_list");
+exports.ParameterList = parameter_list_2.ParameterList;
+var parameter_1 = require("./parameter");
+exports.Parameter = parameter_1.Parameter;
+var type_parser_1 = require("./type_parser");
+exports.TypeParser = type_parser_1.TypeParser;
