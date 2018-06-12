@@ -15,7 +15,11 @@ class Parameter {
         }
         else {
             if (configuration.type) {
-                this.parser = configuration.type;
+                var pp = type_parser_1.TypeParser.getByName(configuration.type);
+                if (!pp) {
+                    throw new Error('Type parser not found.');
+                }
+                this.parser = pp;
             }
             else {
                 throw new Error('Type not found for parameter configuration.');

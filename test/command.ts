@@ -54,7 +54,7 @@ describe('Command', () => {
     scope.on('parameterError', (source, error: BlankParameterError, command: Command, raw: string) => {
       expect(error).to.be.a.instanceof(BlankParameterError);
       expect(error.parameter).to.eq('number');
-      expect(command).to.eq('test');
+      expect(command.name).to.eq('test');
     });
     scope.parse(null, 'test');
   });
@@ -67,8 +67,16 @@ describe('Command', () => {
     scope.on('parameterError', (source, error: InvalidParameterError, command: Command, raw: string) => {
       expect(error).to.be.a.instanceof(InvalidParameterError);
       expect(error.parameter).to.eq('number');
-      expect(command).to.eq('test');
+      expect(command.name).to.eq('test');
     });
     scope.parse(null, 'test dasdsa');
+  });
+
+  it('should run command handler when nonrequired field is not present', () => {
+    var scope = Scope.get('command3');
+    scope.addCommand('test', {number: {type: 'Number', required: false}},  (source, parameters) => {
+      expect(parameters.number).to.be.undefined;
+    });
+    scope.parse(null, 'test');
   });
 });

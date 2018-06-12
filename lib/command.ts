@@ -15,6 +15,7 @@ export class Command {
     this.parameterList.parameters.every(p => {    
       var parser = p.parser;
       var result = text.match(parser.capturePattern);
+
       if(result) {
         var index = result.index || 0;
         
