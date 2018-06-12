@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import 'mocha';
 
 import { TypeParser } from '../lib/type_parser';
-import { BlankParameterError } from '../lib/errors/blank_parameter_error';
-import { InvalidParameterError } from '../lib/errors/invalid_parameter_error';
+import { TypeParsingError } from '../lib/errors/type_parsing_error';
 
 describe('TypeParser Number', () => {
   it('should return all default TypeParsers', () => {
@@ -27,7 +26,7 @@ describe('TypeParser Number', () => {
     if(tp) {
       var input = "";
       var call = tp.parse.bind(tp, input);
-      expect(call).to.throw(BlankParameterError);
+      expect(call).to.throw(TypeParsingError);
     }
   });
 
@@ -36,7 +35,7 @@ describe('TypeParser Number', () => {
     if(tp) {
       var input = "dasdasdas";
       var call = tp.parse.bind(tp, input);
-      expect(call).to.throw(InvalidParameterError);
+      expect(call).to.throw(TypeParsingError);
     }
   });
 });
@@ -56,7 +55,7 @@ describe('TypeParser Word', () => {
     if(tp) {
       var input = "";
       var call = tp.parse.bind(tp, input);
-      expect(call).to.throw(BlankParameterError);
+      expect(call).to.throw(TypeParsingError);
     }
   });
 });

@@ -4,6 +4,8 @@ import 'mocha';
 import { Command } from '../lib/command';
 import { ParameterList } from '../lib/parameter_list';
 import { Scope } from '../lib';
+import { BlankParameterError } from '../lib/errors/blank_parameter_error';
+import { InvalidParameterError } from '../lib/errors/invalid_parameter_error';
 
 describe('Command', () => {
   it('should process correctly a single Number', () => {
@@ -31,5 +33,31 @@ describe('Command', () => {
       expect(parameters.money).to.eq('The quick brown "fox" jumps over the lazy dog.');
     });
     scope.parse(null, `test     moko     20      "The quick brown \\"fox\\" jumps over the lazy dog."`);
+  });
+
+  it('should emit an event with BlankParameterError when Number is blank', () => {
+    var scope = Scope.get('command1');
+    scope.addCommand('test', {number: 'Number'},  (source, parameters) => {
+      expect.fail();
+    });
+    scope.on('parameterError', (error: BlankParameterError, command, raw) => {
+      expect(error).to.be.a.instanceof(BlankParameterError);
+      expect(error.parameter).to.eq('number');
+      expect(command).to.eq('test');
+    });
+    scope.parse(null, 'test');
+  });
+
+  it('should emit an event with InvalidParameterError when Number is invalid', () => {
+    var scope = Scope.get('command2');
+    scope.addCommand('test', {number: 'Number'},  (source, parameters) => {
+      expect.fail();
+    });
+    scope.on('parameterError', (error: InvalidParameterError, command, raw) => {
+      expect(error).to.be.a.instanceof(InvalidParameterError);
+      expect(error.parameter).to.eq('number');
+      expect(command).to.eq('test');
+    });
+    scope.parse(null, 'test dasdsa');
   });
 });

@@ -12,7 +12,7 @@ export class Command {
       raw: text
     }; 
     
-    this.parameterList.parameters.every(p => {
+    this.parameterList.parameters.every(p => {    
       var parser = p.parser;
       var result = text.match(parser.capturePattern);
       if(result) {
@@ -45,7 +45,11 @@ export class Command {
         // if there is no match for this parameter
         // and it is required, throw an error
         if(p.required) {
-          throw new BlankParameterError("No match for required parameter.", p.name);
+          if(text.length) {
+            throw new InvalidParameterError("No match for required parameter.", p.name);
+          } else {
+            throw new BlankParameterError("No match for required parameter.", p.name);
+          }
         }
         // if it is not required, break the parameter
         // parsing. it is a requirement for nonrequired
