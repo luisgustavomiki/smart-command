@@ -14,7 +14,10 @@ class Scope extends events_1.EventEmitter {
     constructor(name) {
         super();
         this.name = name;
-        this.commands = [];
+        this._commands = [];
+    }
+    get commands() {
+        return this._commands;
     }
     static get(name) {
         var result = scope_list.find(s => s.name == name);
@@ -30,11 +33,11 @@ class Scope extends events_1.EventEmitter {
     addCommand(name, parameters, handler) {
         var parameterListInstance = new parameter_list_1.ParameterList(parameters);
         var commandInstance = new command_1.Command(name, parameterListInstance, handler);
-        this.commands.push(commandInstance);
+        this._commands.push(commandInstance);
     }
     parse(source, input) {
         var words = input.split(' ');
-        var command = this.commands.find(c => c.name == words[0]);
+        var command = this._commands.find(c => c.name == words[0]);
         if (!command) {
             this.emit('commandNotFound', source, input);
             return;

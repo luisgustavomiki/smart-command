@@ -8,13 +8,17 @@ import { ParameterError } from "./errors/parameter_error";
 var scope_list: Scope[] = [];
 
 export class Scope extends EventEmitter {
-  private commands: Command[] = [];
+  private _commands: Command[] = [];
   /**
    * Creates a new scope and sets a provided name to it.
    * @param name The name of the scope to be used for logging and identification.
    */
   private constructor(public readonly name: string) {
     super();
+  }
+
+  get commands() {
+    return this._commands;
   }
 
   static get(name: string) {
@@ -31,12 +35,12 @@ export class Scope extends EventEmitter {
   public addCommand(name: string, parameters: any, handler: (source: any, ...args: any[]) => void) {
     var parameterListInstance = new ParameterList(parameters);
     var commandInstance = new Command(name, parameterListInstance, handler);
-    this.commands.push(commandInstance);
+    this._commands.push(commandInstance);
   }
 
   public parse(source: any, input: string) {
     var words = input.split(' ');
-    var command = this.commands.find(c => c.name == words[0]);
+    var command = this._commands.find(c => c.name == words[0]);
 
     if(!command) {
       this.emit('commandNotFound', source, input);

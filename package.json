@@ -1,6 +1,6 @@
 {
   "name": "smart-command",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Handles command annotation and parameter processing.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
