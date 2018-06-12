@@ -4,6 +4,7 @@ import { TypeParser } from "./type_parser";
 export class Parameter {
   public readonly parser: TypeParser;
   public readonly required: boolean = true;
+  public readonly description?: string;
 
   constructor(public readonly name: string, configuration: any) {
     if(_.isString(configuration)) {
@@ -24,6 +25,7 @@ export class Parameter {
       } else {
         this.required = true;
       }
+      this.description = configuration.description;
     }
   }
 

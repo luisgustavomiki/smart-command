@@ -26,6 +26,7 @@ class Parameter {
             else {
                 this.required = true;
             }
+            this.description = configuration.description;
         }
     }
     parse(bit) {
