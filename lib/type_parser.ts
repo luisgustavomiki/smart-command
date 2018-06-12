@@ -1,5 +1,5 @@
-import { BlankParameterError } from "./errors/blank_parameter";
-import { InvalidParameterError } from "./errors/invalid_parameter";
+import { BlankParameterError } from "./errors/blank_parameter_error";
+import { InvalidParameterError } from "./errors/invalid_parameter_error";
 
 var parsers_list: TypeParser[] = [];
 
@@ -72,7 +72,15 @@ TypeParser.create('Phrase', /"(?:[^"\\]|\\.)*"/, (bit: string) => {
   bit = bit.replace(/^"(.*)"$/, '$1');
   bit = bit.replace(/\\"/g, '"');
   if(bit.length == 0) {
-    throw new BlankParameterError('There is no word to parse.');
+    throw new BlankParameterError('There is no phrase to parse.');
+  }
+  return bit;
+});
+
+TypeParser.create('String', /[^\n]+/, (bit: string) => {
+  bit = bit.trim();
+  if(bit.length == 0) {
+    throw new BlankParameterError('There is no string to parse.');
   }
   return bit;
 });
