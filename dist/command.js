@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const invalid_parameter_error_1 = require("./errors/invalid_parameter_error");
 const blank_parameter_error_1 = require("./errors/blank_parameter_error");
+const type_parsing_error_1 = require("./errors/type_parsing_error");
 class Command {
     constructor(name, parameterList, callback) {
         this.name = name;
@@ -19,7 +21,17 @@ class Command {
                 var index = result.index || 0;
                 if (index == 0) {
                     text = text.slice(result[0].length).trim();
-                    parsedParameters[p.name] = p.parse(result[0]);
+                    try {
+                        parsedParameters[p.name] = p.parse(result[0]);
+                    }
+                    catch (error) {
+                        if (error instanceof type_parsing_error_1.TypeParsingError) {
+                            throw new invalid_parameter_error_1.InvalidParameterError(error.message, p.name);
+                        }
+                        else {
+                            throw error;
+                        }
+                    }
                     return true;
                 }
                 else {

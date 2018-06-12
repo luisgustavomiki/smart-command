@@ -1,6 +1,7 @@
 import { ParameterList } from "./parameter_list";
 import { InvalidParameterError } from "./errors/invalid_parameter_error";
 import { BlankParameterError } from "./errors/blank_parameter_error";
+import { TypeParsingError } from "./errors/type_parsing_error";
 
 export class Command {
   constructor(public readonly name: string, private parameterList: ParameterList, private callback: (source: any, parameters: any) => void) {}
@@ -19,7 +20,15 @@ export class Command {
         
         if(index == 0) {
           text = text.slice(result[0].length).trim();
-          parsedParameters[p.name] = p.parse(result[0]);
+          try {
+            parsedParameters[p.name] = p.parse(result[0]);
+          } catch (error) {
+            if(error instanceof TypeParsingError) {
+              throw new InvalidParameterError(error.message, p.name);
+            } else {
+              throw error;
+            }
+          }
           return true;
         } else {
           // if theres a mismatch match and the 
