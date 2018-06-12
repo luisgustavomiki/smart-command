@@ -20,8 +20,11 @@ class Parameter {
             else {
                 throw new Error('Type not found for parameter configuration.');
             }
-            if (configuration.required) {
-                this.required = configuration.required;
+            if (typeof configuration.required !== 'undefined') {
+                this.required = !!configuration.required;
+            }
+            else {
+                this.required = true;
             }
         }
     }
