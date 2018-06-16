@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const parameter_list_1 = require("./parameter_list");
 const command_1 = require("./command");
@@ -36,24 +44,27 @@ class Scope extends events_1.EventEmitter {
         this._commands.push(commandInstance);
     }
     parse(source, input) {
-        var words = input.split(' ');
-        var command = this._commands.find(c => c.name == words[0]);
-        if (!command) {
-            this.emit('commandNotFound', source, input);
-            return;
-        }
-        try {
-            command.run(source, words.slice(1).join(' '));
-        }
-        catch (error) {
-            if (error instanceof blank_parameter_error_1.BlankParameterError ||
-                error instanceof invalid_parameter_error_1.InvalidParameterError) {
-                this.emit('parameterError', source, error, command, words.slice(1).join(' '));
+        return __awaiter(this, void 0, void 0, function* () {
+            var words = input.split(' ');
+            var command = this._commands.find(c => c.name == words[0]);
+            if (!command) {
+                this.emit('commandNotFound', source, input);
+                return;
             }
-            else {
-                throw error;
+            try {
+                yield command.run(source, words.slice(1).join(' '));
             }
-        }
+            catch (error) {
+                if (error instanceof blank_parameter_error_1.BlankParameterError ||
+                    error instanceof invalid_parameter_error_1.InvalidParameterError) {
+                    this.emit('parameterError', source, error, command, words.slice(1).join(' '));
+                }
+                else {
+                    this.emit('commandError', source, error, command, words.slice(1).join(' '));
+                    throw error;
+                }
+            }
+        });
     }
 }
 exports.Scope = Scope;

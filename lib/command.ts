@@ -6,7 +6,7 @@ import { TypeParsingError } from "./errors/type_parsing_error";
 export class Command {
   constructor(public readonly name: string, public readonly parameterList: ParameterList, private callback: (source: any, parameters: any) => void) {}
   
-  run(source: any, text: string) {
+  async run(source: any, text: string) {
     text = text.trim();
     var parsedParameters: any = {
       raw: text
@@ -59,7 +59,7 @@ export class Command {
         return false;
       }
     });
-    this.callback(source, parsedParameters);
+    return await this.callback(source, parsedParameters);
   }
 }
 

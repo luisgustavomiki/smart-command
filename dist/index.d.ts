@@ -12,7 +12,7 @@ export declare class Scope extends EventEmitter {
     readonly commands: Command[];
     static get(name: string): Scope;
     addCommand(name: string, parameters: any, handler: (source: any, ...args: any[]) => void): void;
-    parse(source: any, input: string): void;
+    parse(source: any, input: string): Promise<void>;
 }
 export { ParameterError } from "./errors/parameter_error";
 export { BlankParameterError } from "./errors/blank_parameter_error";

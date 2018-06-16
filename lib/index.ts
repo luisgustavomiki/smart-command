@@ -38,7 +38,7 @@ export class Scope extends EventEmitter {
     this._commands.push(commandInstance);
   }
 
-  public parse(source: any, input: string) {
+  public async parse(source: any, input: string) {
     var words = input.split(' ');
     var command = this._commands.find(c => c.name == words[0]);
 
@@ -48,12 +48,13 @@ export class Scope extends EventEmitter {
     }
 
     try {
-      command.run(source, words.slice(1).join(' '));
+      await command.run(source, words.slice(1).join(' '));
     } catch(error) {
       if(error instanceof BlankParameterError ||
         error instanceof InvalidParameterError) {
         this.emit('parameterError', source, error, command, words.slice(1).join(' '));
       } else {
+        this.emit('commandError', source, error, command, words.slice(1).join(' '));
         throw error;
       }
     }
