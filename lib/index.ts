@@ -32,7 +32,7 @@ export class Scope extends EventEmitter {
     }
   }
 
-  public addCommand(name: string, parameters: any, handler: (source: any, ...args: any[]) => void) {
+  public addCommand(name: string | string[], parameters: any, handler: (source: any, ...args: any[]) => void) {
     var parameterListInstance = new ParameterList(parameters);
     var commandInstance = new Command(name, parameterListInstance, handler);
     this._commands.push(commandInstance);
@@ -40,7 +40,13 @@ export class Scope extends EventEmitter {
 
   public async parse(source: any, input: string) {
     var words = input.split(' ');
-    var command = this._commands.find(c => c.name == words[0]);
+    var command = this._commands.find(c => {
+      if(Array.isArray(c.name)) {
+        return c.name.includes(words[0]);
+      } else {
+        return c.name == words[0];
+      }      
+    });
 
     if(!command) {
       this.emit('commandNotFound', source, input);
