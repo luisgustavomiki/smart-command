@@ -79,4 +79,16 @@ describe('Command', () => {
     });
     scope.parse(null, 'test');
   });
+
+  it('should throw an error when async handler throws a custom error.', async () => {
+    var scope = Scope.get('command4');
+    scope.addCommand('test', {number: {type: 'Number', required: false}},  (source, parameters) => {
+      throw new Error('test');
+    });
+    try{
+      await scope.parse(null, 'test');
+    } catch (error) {
+      expect(error.message).to.be.eq('test');
+    }
+  });
 });
